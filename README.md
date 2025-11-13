@@ -3,7 +3,7 @@
 ## API
 [Спецификация OpenAPI/Swagger](https://github.com/yn96k/client-block-service/blob/main/client-block-service-v1.openapi.yaml)
 ### 1. Блокировка клиента
-POST /clients/{client_id}/block
+POST /clients/{client_id}/block <br>
 Параметры requestbody:
 - block_type_id - ID причины блокировки
 - comment - Комментарий модератора
@@ -100,5 +100,6 @@ WHERE client_id = {client_id}
 |idx_client_block_client_id|UNIQUE|client_id|ASC|
 
 ### ER-диаграмма таблиц:
-<img width="7511" height="2893" alt="image" src="https://github.com/user-attachments/assets/f870c4bb-517a-42cb-9619-d2be4e79ce91" />
+<img width="4287" height="1651" alt="image" src="https://github.com/user-attachments/assets/355b8fde-79b7-4146-bd7f-92b54705839b" />
+
 
