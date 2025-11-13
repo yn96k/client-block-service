@@ -41,5 +41,5 @@
 
 |Индекс|Тип|Столбцы|Порядок|
 |:----|:----|:----|:----|
-|idx_client_id|UNIQUE|client_id|ASC|
+|idx_client_block_client_id|UNIQUE|client_id|ASC|
 
