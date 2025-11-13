@@ -1,5 +1,62 @@
 В базе данных предлагается хранить одну таблицу - лог блокировок/разблокировок.
 ---
+## API
+[Спецификация OpenAPI/Swagger](https://github.com/yn96k/client-block-service/blob/main/client-block-service-v1.openapi.yaml)
+### 1. Блокировка клиента
+POST /clients/{client_id}/block
+Параметры requestbody:
+- block_type_id - ID причины блокировки
+- comment - Комментарий модератора
+
+Алгоритм сервиса при вызове запроса:
+- Обновляет поле is_blocked в таблице client:
+```sql
+UPDATE client
+SET is_blocked = TRUE
+WHERE client_id = {client_id}
+```
+- Добавляет строку в client_block:
+```sql
+INSERT INTO client_block(client_id, block_type_id, comment)
+VALUES({client_id, {block_type_id}, {comment})
+```
+### 2. Разблокировка клиента
+POST /clients/{client_id}/unblock
+
+Алгоритм сервиса при вызове запроса:
+- Обновляет поле is_blocked в таблице client:
+```sql
+UPDATE client
+SET is_blocked = FALSE
+WHERE client_id = {client_id}
+```
+- Удаляет строку в client_block:
+```sql
+DELETE FROM client_block
+WHERE client_id = {client_id}
+```
+
+### 3. Просмотр статуса блокировки
+GET /clients/{client_id}/block_status
+
+Ответ сервера:
+- client_id - UUID клиента
+- is_blocked - статус блокировки
+- block_type - причина блокировки (опицональное поле) 
+- blocked_at - дата и время блокировки (опицональное поле)
+- comment - комментарий модератора (опицональное поле)
+
+Алгоритм сервиса при вызове запроса:
+- Запрашивает выборку из client_block:
+
+```sql
+SELECT client_id, block_type_id, blocked_at, comment
+WHERE client_id = {client_id}
+```
+
+- Возвращает client_id и is_blocked = False если получает пустую выборку
+
+## База данных
 ### 1. Таблица client
    Хранит информацию о клиенте, его основные признаки. Предлагается в рамках реализаций функций блокировки добавить атрибут статуса блокировки is_blocked:
    
@@ -41,4 +98,7 @@
 |Индекс|Тип|Столбцы|Порядок|
 |:----|:----|:----|:----|
 |idx_client_block_client_id|UNIQUE|client_id|ASC|
+
+### ER-диаграмма таблиц:
+<img width="7511" height="2893" alt="image" src="https://github.com/user-attachments/assets/f870c4bb-517a-42cb-9619-d2be4e79ce91" />
 
