@@ -8,7 +8,6 @@
 |client_id|VARCHAR(36) PK|UUID клиента|
 |client_name|VARCHAR(30) NOT NULL|Название юридического лица|
 |ogrn|DECIMAL(13) NOT NULL|ОГРН организации|
-|account_num|DECIMAL(20) NOT NULL|Расчетный счет клиента|
 |is_blocked|BOOLEAN NOT NULL|Статус блокировки клиента|
 
 Так как запросы приходят по client_id, целесообразно индексировать это поле:
@@ -32,9 +31,9 @@
 |Имя атрибута|Тип данных|Описание|
 |:----|:----|:----|
 |client_block_id|INT PK AUTO_INCREMENT|ID блокировки|
-|client_id|CHAR(36) FK client(client_id) UNIQUE|UUID клиента|
-|block_type_id|INT FK block_type(block_type_id)|ID причины блокировки|
-|blocked_at|TIMESTAMP|Дата и время блокировки|
+|client_id|CHAR(36) FK client(client_id) UNIQUE NOT NULL|UUID клиента|
+|block_type_id|INT FK block_type(block_type_id) NOT NULL|ID причины блокировки|
+|blocked_at|TIMESTAMP NOT NULL|Дата и время блокировки|
 |comment|VARCHAR(50)|Комментарий модератора. Поле позволяет хранить специфичные детали о конкретной блокировке|
 
 Здесь по аналогичным причинам нужно индексировать поле client_id:
