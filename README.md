@@ -1,4 +1,4 @@
-В базе данных предлагается хранить одну таблицу - лог блокировок/разблокировок.
+Кейс по системной аналитике - блокировка платежей юридическим лицами
 ---
 ## API
 [Спецификация OpenAPI/Swagger](https://github.com/yn96k/client-block-service/blob/main/client-block-service-v1.openapi.yaml)
